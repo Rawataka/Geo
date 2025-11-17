@@ -118,6 +118,18 @@ fun GeoQuizApp() {
                 }
             }
         }
+
+        if (answered && currentIndex < questions.size - 1) {
+            Button(
+                onClick = {
+                    currentIndex++
+                    answered = false
+                },
+                modifier = Modifier.padding(top = 16.dp)
+            ) {
+                Text("Next Question")
+            }
+        }
     }
 }
 @Preview(showBackground = true)
