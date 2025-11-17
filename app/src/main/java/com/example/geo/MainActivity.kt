@@ -1,12 +1,15 @@
 package com.example.geo
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -19,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -54,6 +58,10 @@ fun GeoQuizApp() {
     )
 
     var currentIndex by remember { mutableStateOf(0) }
+    var answered by remember { mutableStateOf(false) }
+    var score by remember { mutableStateOf(0) }
+    val context = LocalContext.current
+
     val currentQuestion = questions[currentIndex]
 
     Column(
@@ -80,6 +88,35 @@ fun GeoQuizApp() {
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(24.dp)
             )
+        }
+
+        if (!answered) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
+                Button(onClick = {
+                    answered = true
+                    if (currentQuestion.second == true) {
+                        score++
+                        Toast.makeText(context, "Верно", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "Неверно", Toast.LENGTH_SHORT).show()
+                    }
+                }) {
+                    Text("True")
+                }
+                Button(onClick = {
+                    answered = true
+                    if (currentQuestion.second == false) {
+                        score++
+                        Toast.makeText(context, "Верно", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "Неверно", Toast.LENGTH_SHORT).show()
+                    }
+                }) {
+                    Text("False")
+                }
+            }
         }
     }
 }
